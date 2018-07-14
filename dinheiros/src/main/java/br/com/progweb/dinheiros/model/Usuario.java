@@ -21,7 +21,55 @@ public class Usuario {
     // TODO: MD5
     private String senha;
 
-    private Date ultimaModificacaoSenha;
+    public int getIdUsuario() {
+		return idUsuario;
+	}
+
+	public void setIdUsuario(int idUsuario) {
+		this.idUsuario = idUsuario;
+	}
+
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+
+	public Date getUltimaModificacaoSenha() {
+		return ultimaModificacaoSenha;
+	}
+
+	public void setUltimaModificacaoSenha(Date ultimaModificacaoSenha) {
+		this.ultimaModificacaoSenha = ultimaModificacaoSenha;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public String getUrlFoto() {
+		return urlFoto;
+	}
+
+	public void setUrlFoto(String urlFoto) {
+		this.urlFoto = urlFoto;
+	}
+
+	public Lingua getLingua() {
+		return lingua;
+	}
+
+	public void setLingua(Lingua lingua) {
+		this.lingua = lingua;
+	}
+
+	private Date ultimaModificacaoSenha;
 
     private String nome;
     

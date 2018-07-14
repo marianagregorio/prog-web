@@ -3,9 +3,12 @@ spring:
         show-sql: true
         hibernate:
             ddl-auto: update
-            default_schema: public
     datasource:
         driverClassName: org.postgresql.Driver
         url: jdbc:postgresql://localhost:5432/dinheiros
         username: postgres
         password: postgres
+#    mvc:
+#        view:
+#            prefix: /WEB-INF/view/
+#            suffix: .jsp
