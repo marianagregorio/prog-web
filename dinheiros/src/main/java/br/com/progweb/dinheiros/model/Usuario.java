@@ -1,11 +1,18 @@
 package br.com.progweb.dinheiros.model;
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.util.Date;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
 import br.com.progweb.dinheiros.type.Lingua;
 
 @Entity
@@ -13,14 +20,46 @@ import br.com.progweb.dinheiros.type.Lingua;
 public class Usuario {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name="idUsuario")
+    @Column(name="idUsuario", nullable=false)
     private int idUsuario;
 
-    private String user;
+    @NotBlank
+    @Size(min=0, max=40)
+    // @Pattern(regexp = "[0-9a-zA-Z_-.]*")
+    @Column(name="username", length=40, nullable=false, unique=true)
+    private String username;
 
     // TODO: MD5
+    @NotBlank
+    @Size(min=6, max=32)
+    @Column(name="senha", length=32, nullable=false)
     private String senha;
+    
+    @NotBlank
+    @Email
+    @Size(max=80)
+    @Column(name="email", length=80, nullable=false, unique=true)
+    private String email;
 
+    @NotNull
+    @Column(name="ultimaModSenha", nullable=false)
+	private Date ultimaModificacaoSenha;
+    
+    @NotBlank
+    // @Pattern(regexp="[A-Za-z à-úÁ-Ú]*")
+    @Size(max=80)
+    @Column(name="nome", nullable=false, length=80)
+    private String nome;
+    
+    @Column(name="urlFoto", nullable=true, unique=true, length=80)
+    private String urlFoto;
+    
+    @NotNull
+    @Column(name="lingua", nullable=false)
+    private Lingua lingua;
+
+    // private List<Contas> contas;
+    
     public int getIdUsuario() {
 		return idUsuario;
 	}
@@ -35,6 +74,14 @@ public class Usuario {
 
 	public void setSenha(String senha) {
 		this.senha = senha;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public Date getUltimaModificacaoSenha() {
@@ -69,21 +116,11 @@ public class Usuario {
 		this.lingua = lingua;
 	}
 
-	private Date ultimaModificacaoSenha;
-
-    private String nome;
-    
-    private String urlFoto;
-    
-    private Lingua lingua;
-
-    // private List<Contas> contas;
-
     public void setUser(String user) {
-        this.user = user;
+        this.username = user;
     }
 
     public String getUser() {
-        return this.user;
+        return this.username;
     }
 }

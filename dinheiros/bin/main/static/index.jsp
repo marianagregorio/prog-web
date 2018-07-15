@@ -5,9 +5,9 @@
 <title>Dinheiros</title>
 </head>
 <body>
-<form id="login" action="/save" method="POST">
-<label>Usuário:
-<input name="usuario" type="textinput" required>
+<form id="login" action="/usuario" method="POST">
+<label>Usuárioaaaaaa:
+<input name="user" type="text" required>
 </label><br />
 <label>senha:
 <input name="senha" type="password" required>
@@ -15,4 +15,4 @@
 <input type="submit" name="action" value="Login" />
 </form>
 </body>
-</html
+</html>
