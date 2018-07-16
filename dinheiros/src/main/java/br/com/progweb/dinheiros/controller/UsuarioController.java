@@ -46,10 +46,13 @@ public class UsuarioController {
 	}
 	
 	@GetMapping("/usuario")
-	public Optional<Usuario> autenticar(@Valid @RequestParam Usuario usuario) throws Exception{
+	public Optional<Usuario> autenticar(@Valid @RequestParam String user, @RequestParam String senha) throws Exception{
+		Usuario usuario = new Usuario();
+		usuario.setSenha(senha);
+		usuario.setUser(user);
 		ExampleMatcher matcher = ExampleMatcher.matching();//.withMatcher("user");
-		if (repository.findOne(Example.of(usuario, matcher)) != null) { //Example
-			return repository.findOne(null);
+		if (repository.findOne(Example.of(usuario)) != null) { //Example
+			return repository.findOne(Example.of(usuario, matcher));
 		};
 		//TODO: exception usuário inválido
 		throw new Exception();
