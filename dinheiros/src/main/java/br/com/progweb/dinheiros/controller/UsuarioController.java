@@ -27,40 +27,25 @@ public class UsuarioController {
 	@Autowired
 	UsuarioRepository repository;
 	
-	@PostMapping(value = "/usuario",
-    consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, 
-    produces = {MediaType.APPLICATION_ATOM_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
-	public @ResponseBody Usuario inserir(@Valid @RequestParam String user,
-			@Valid @RequestParam String senha, @Valid @RequestParam String email,
-			@Valid @RequestParam String nome
-			//, @Valid @RequestParam String lingua
-			) {
-		Usuario usuario = new Usuario();
-		usuario.setEmail(email);
+	@PostMapping(value = "/usuario")
+	public @ResponseBody Usuario inserir(@RequestBody Usuario usuario) {
 		usuario.setLingua(Lingua.valueOf("PT_BR"));
-		usuario.setNome(nome);
-		usuario.setSenha(senha);
 		usuario.setUltimaModificacaoSenha(new Date());
-		usuario.setUser(user);
 		return repository.save(usuario);
 	}
 	
 	@GetMapping("/usuario")
-	public Optional<Usuario> autenticar(@Valid @RequestParam String user, @RequestParam String senha) throws Exception{
+	public @ResponseBody Optional<Usuario> autenticar(@Valid @RequestParam String user, @RequestParam String senha) throws Exception{
 		Usuario usuario = new Usuario();
 		usuario.setSenha(senha);
 		usuario.setUser(user);
-		ExampleMatcher matcher = ExampleMatcher.matching();//.withMatcher("user");
-		if (repository.findOne(Example.of(usuario)) != null) { //Example
+		ExampleMatcher matcher = ExampleMatcher.matching().withIgnoreNullValues().withIgnorePaths("idUsuario");//.withMatcher("user");
+		if (repository.findOne(Example.of(usuario, matcher)).isPresent()) {
+			System.out.println(repository.findOne(Example.of(usuario, matcher)));
 			return repository.findOne(Example.of(usuario, matcher));
 		};
 		//TODO: exception usuário inválido
 		throw new Exception();
-	}
-	
-	@GetMapping("/usuario/novo")
-	public String novoUsuario() {
-		return "cadUser";
 	}
 	
 

@@ -24,7 +24,7 @@ public class Categoria {
 	private Categoria categoria;
 	
 	@NotBlank
-	@Column(name="descricao", length=80)
+	@Column(name="descricao", length=80, nullable=false)
 	private String descricao;
 
 	public int getId() {

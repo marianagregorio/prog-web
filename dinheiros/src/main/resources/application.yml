@@ -8,8 +8,3 @@ spring:
         url: jdbc:postgresql://localhost:5432/dinheiros
         username: postgres
         password: postgres
-    mvc:
-        view:
-            prefix: /WEB-INF/jsp/
-            suffix: .jsp
-            
