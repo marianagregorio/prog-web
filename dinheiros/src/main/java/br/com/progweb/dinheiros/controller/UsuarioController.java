@@ -35,11 +35,11 @@ public class UsuarioController {
 	}
 	
 	@GetMapping("/usuario")
-	public @ResponseBody Optional<Usuario> autenticar(@Valid @RequestParam String user, @RequestParam String senha) throws Exception{
+	public @ResponseBody Optional<Usuario> autenticar(@Valid @RequestBody String user, @RequestParam String senha) throws Exception{
 		Usuario usuario = new Usuario();
 		usuario.setSenha(senha);
 		usuario.setUser(user);
-		ExampleMatcher matcher = ExampleMatcher.matching().withIgnoreNullValues().withIgnorePaths("idUsuario");//.withMatcher("user");
+		ExampleMatcher matcher = ExampleMatcher.matching().withIgnoreNullValues().withIgnorePaths("idUsuario");
 		if (repository.findOne(Example.of(usuario, matcher)).isPresent()) {
 			System.out.println(repository.findOne(Example.of(usuario, matcher)));
 			return repository.findOne(Example.of(usuario, matcher));
