@@ -1,6 +1,8 @@
 package br.com.progweb.dinheiros.controller;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -10,6 +12,7 @@ import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -46,6 +49,17 @@ public class UsuarioController {
 		};
 		//TODO: exception usuário inválido
 		throw new Exception();
+	}
+	
+	@DeleteMapping("/usuario/{id}")
+	public @ResponseBody Object excluir(@PathVariable("id") int id) {
+		try {
+			repository.delete(repository.findById(id).get());
+			return new HashMap<>().put("mensagem", "Excluído!");
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			return new HashMap<>().put("erro", e.getMessage());
+		}
 	}
 	
 

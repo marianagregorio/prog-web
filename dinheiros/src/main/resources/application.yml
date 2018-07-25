@@ -8,3 +8,4 @@ spring:
         url: jdbc:postgresql://localhost:5432/dinheiros
         username: postgres
         password: postgres
+server.port: 8200 
