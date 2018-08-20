@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import br.com.progweb.dinheiros.dto.LoginDTO;
 import br.com.progweb.dinheiros.model.Usuario;
 import br.com.progweb.dinheiros.repository.UsuarioRepository;
 import br.com.progweb.dinheiros.type.Lingua;
@@ -30,6 +31,7 @@ public class UsuarioController {
 	@Autowired
 	UsuarioRepository repository;
 	
+	// cadastrar novo usuário
 	@PostMapping(value = "/usuario")
 	public @ResponseBody Usuario inserir(@RequestBody Usuario usuario) {
 		usuario.setLingua(Lingua.valueOf("PT_BR"));
@@ -37,11 +39,12 @@ public class UsuarioController {
 		return repository.save(usuario);
 	}
 	
-	@GetMapping("/usuario")
-	public @ResponseBody Optional<Usuario> autenticar(@Valid @RequestBody String user, @RequestParam String senha) throws Exception{
+	// login
+	@PostMapping("/login")
+	public @ResponseBody Optional<Usuario> autenticar(@RequestBody LoginDTO user) throws Exception{
 		Usuario usuario = new Usuario();
-		usuario.setSenha(senha);
-		usuario.setUser(user);
+		usuario.setSenha(user.getPassword());
+		usuario.setUser(user.getUsername());
 		ExampleMatcher matcher = ExampleMatcher.matching().withIgnoreNullValues().withIgnorePaths("idUsuario");
 		if (repository.findOne(Example.of(usuario, matcher)).isPresent()) {
 			System.out.println(repository.findOne(Example.of(usuario, matcher)));
@@ -57,7 +60,6 @@ public class UsuarioController {
 			repository.delete(repository.findById(id).get());
 			return new HashMap<>().put("mensagem", "Excluído!");
 		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
 			return new HashMap<>().put("erro", e.getMessage());
 		}
 	}
