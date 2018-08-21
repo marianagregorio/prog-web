@@ -7,10 +7,12 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.User.UserBuilder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.StandardPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import br.com.progweb.dinheiros.model.Usuario;
 import br.com.progweb.dinheiros.security.JWTAuthenticationFilter;
 import br.com.progweb.dinheiros.security.JWTLoginFilter;
 
@@ -40,11 +42,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		// cria uma conta default
 		auth.inMemoryAuthentication().passwordEncoder(NoOpPasswordEncoder.getInstance()).withUser("user")
-				.password("password").roles("USER").and().withUser("sysuser").password("password").roles("SYSTEM");
+				.password("123456").roles("USER");
 		// auth.inMemoryAuthentication()
 		// .withUser("admin")
 		// .password("password")
 		// .roles("ADMIN");
+	}
+	
+	public static Usuario getUsuario() {
+		Usuario user = new Usuario();
+		user.setIdUsuario(6);
+		user.setUser("user");
+		user.setSenha("123456");
+		return user;
 	}
 
 }

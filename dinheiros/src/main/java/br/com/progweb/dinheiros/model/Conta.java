@@ -41,6 +41,9 @@ public class Conta {
 		return id;
 	}
 
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
 	public void setId(int id) {
 		this.id = id;
 	}
