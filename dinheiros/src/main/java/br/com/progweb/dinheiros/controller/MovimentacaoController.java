@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import br.com.progweb.dinheiros.model.Conta;
 import br.com.progweb.dinheiros.model.Movimentacao;
 import br.com.progweb.dinheiros.repository.MovimentacaoRepository;
 
@@ -27,13 +29,16 @@ public class MovimentacaoController {
 
 	// cadastrar nova Movimentacao
 	@PostMapping
-	public @ResponseBody Movimentacao inserir(@RequestBody Movimentacao Movimentacao) {
-		return repository.save(Movimentacao);
+	public @ResponseBody Movimentacao inserir(@RequestParam int idConta, @RequestBody Movimentacao movimentacao) {
+		Conta conta = new Conta();
+		movimentacao.setConta(conta);
+		conta.setId(idConta);
+		return repository.save(movimentacao);
 	}
 
 	@PutMapping(value = "/{id}")
-	public @ResponseBody Movimentacao alterar(@PathVariable("id") int id, @RequestBody Movimentacao Movimentacao) {
-		return repository.save(Movimentacao);
+	public @ResponseBody Movimentacao alterar(@PathVariable("id") int id, @RequestBody Movimentacao movimentacao) {
+		return repository.save(movimentacao);
 	}
 
 	@DeleteMapping(value = "/{id}")
